@@ -1,0 +1,32 @@
+<?php
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4; */
+
+/**
+ * Add web map service.
+ *
+ * @package     omeka
+ * @subpackage  neatline
+ * @author      Scholars' Lab <>
+ * @author      David McClure <david.mcclure@virginia.edu>
+ * @copyright   2012 The Board and Visitors of the University of Virginia
+ * @license     http://www.apache.org/licenses/LICENSE-2.0.html Apache 2 License
+ */
+?>
+
+<?php
+head(array('content_class' => 'neatline'));
+?>
+
+<?php echo $this->partial('index/_header.php', array(
+    'subtitle' => 'Create Service',
+    'add_button_uri' => 'neatline-wms/add',
+    'add_button_text' => 'Create a Service'
+)); ?>
+
+<div id="primary">
+    <?php echo $form; ?>
+</div>
+
+<?php
+foot();
+?>

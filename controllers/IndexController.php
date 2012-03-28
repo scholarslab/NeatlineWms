@@ -43,9 +43,9 @@ class NeatlineWms_IndexController extends Omeka_Controller_Action
         $this->view->pagination = $this->_wmsTable
             ->getPaginationSettings($page);
 
-        // // Push Neatlines.
-        // $this->view->neatlines = $this->_neatlinesTable
-        //     ->getNeatlinesForBrowse($sortField, $sortDir, $page);
+        // Push services.
+        $this->view->services = $this->_wmsTable
+            ->getServicesForAdmin($sortField, $sortDir, $page);
 
     }
 
@@ -102,69 +102,46 @@ class NeatlineWms_IndexController extends Omeka_Controller_Action
     public function editAction()
     {
 
-        // Get the exhibit.
-        $exhibit = $this->_neatlinesTable->findBySlug($this->_request->slug);
+        // // Get the exhibit.
+        // $exhibit = $this->_neatlinesTable->findBySlug($this->_request->slug);
 
-        // Construct the form.
-        $form = new EditExhibitForm();
-        $form->setExhibit($exhibit);
+        // // Construct the form.
+        // $form = new EditExhibitForm();
+        // $form->setExhibit($exhibit);
 
-        // Populate the form.
-        $form->populate(array(
-            'title' => $exhibit->name,
-            'slug' => $exhibit->slug,
-            'public' => $exhibit->public
-        ));
+        // // Populate the form.
+        // $form->populate(array(
+        //     'title' => $exhibit->name,
+        //     'slug' => $exhibit->slug,
+        //     'public' => $exhibit->public
+        // ));
 
-        // Try to edit if the form has been submitted.
-        if ($this->_request->isPost()) {
+        // // Try to edit if the form has been submitted.
+        // if ($this->_request->isPost()) {
 
-            // If no errors, save form and redirect.
-            if ($form->isValid($this->_request->getPost())) {
+        //     // If no errors, save form and redirect.
+        //     if ($form->isValid($this->_request->getPost())) {
 
-                // Capture values.
-                $values = $form->getValues();
+        //         // Capture values.
+        //         $values = $form->getValues();
 
-                // Apply values.
-                $exhibit->name = $values['title'];
-                $exhibit->slug = $values['slug'];
-                $exhibit->public = (int) $values['public'];
+        //         // Apply values.
+        //         $exhibit->name = $values['title'];
+        //         $exhibit->slug = $values['slug'];
+        //         $exhibit->public = (int) $values['public'];
 
-                // Commit.
-                $exhibit->save();
+        //         // Commit.
+        //         $exhibit->save();
 
-                return $this->_redirect('neatline-exhibits');
+        //         return $this->_redirect('neatline-exhibits');
 
-            }
+        //     }
 
-        }
+        // }
 
-        // Push exhibit and form into view.
-        $this->view->exhibit = $exhibit;
-        $this->view->form = $form;
-
-    }
-
-    /**
-     * Edit items query.
-     *
-     * @return void
-     */
-    public function queryAction()
-    {
-
-        // Get the exhibit.
-        $exhibit = $this->_neatlinesTable->findBySlug($this->_request->slug);
-
-        if(isset($_GET['search'])) {
-            $exhibit->query = serialize($_GET);
-            $exhibit->save();
-            $this->redirect->goto('browse');
-        } else {
-            $queryArray = unserialize($exhibit->query);
-            $_GET = $queryArray;
-            $_REQUEST = $queryArray;
-        }
+        // // Push exhibit and form into view.
+        // $this->view->exhibit = $exhibit;
+        // $this->view->form = $form;
 
     }
 
@@ -176,20 +153,20 @@ class NeatlineWms_IndexController extends Omeka_Controller_Action
     public function deleteAction()
     {
 
-        $_post = $this->_request->getPost();
-        $id = $this->_request->getParam('id');
-        $neatline = $this->_neatlinesTable->find($id);
-        $this->view->neatline = $neatline;
+        // $_post = $this->_request->getPost();
+        // $id = $this->_request->getParam('id');
+        // $neatline = $this->_neatlinesTable->find($id);
+        // $this->view->neatline = $neatline;
 
-        // If the delete is confirmed.
-        if (isset($_post['confirmed'])) {
+        // // If the delete is confirmed.
+        // if (isset($_post['confirmed'])) {
 
-            // Delete and redirect.
-            $neatline->delete();
-            $this->flashSuccess(neatline_deleteSucceed($neatline->name));
-            $this->_redirect('neatline-exhibits');
+        //     // Delete and redirect.
+        //     $neatline->delete();
+        //     $this->flashSuccess(neatline_deleteSucceed($neatline->name));
+        //     $this->_redirect('neatline-exhibits');
 
-        }
+        // }
 
     }
 

@@ -16,7 +16,7 @@ class NeatlineWmsTable extends Omeka_Db_Table
 {
 
     /**
-     * Fetch Neatlines for the main browse view.
+     * Fetch services for admin browse.
      *
      * @param string $sortField The column to sort by.
      * @param string $sortDir 'a' or 'd' for ASC and DESC.

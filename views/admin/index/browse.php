@@ -20,7 +20,7 @@ head(array('content_class' => 'neatline'));
 <?php echo $this->partial('index/_header.php', array(
     'subtitle' => 'Browse Services',
     'add_button_uri' => 'neatline-wms/add',
-    'add_button_text' => 'Create an Web Map Service'
+    'add_button_text' => 'Create a Service'
 )); ?>
 
 <div id="primary">

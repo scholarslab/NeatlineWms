@@ -114,7 +114,7 @@ class NeatlineWmsPlugin
         $router->addRoute(
             'neatlineWms',
             new Zend_Controller_Router_Route(
-                'neatline-wms',
+                'neatline-wms/:action',
                 array(
                     'module'        => 'neatline-wms',
                     'controller'    => 'index',

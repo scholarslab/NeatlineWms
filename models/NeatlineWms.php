@@ -16,12 +16,23 @@ class NeatlineWms extends Omeka_record
 {
 
     /**
-     * Record attributes.
+     * The id of the parent item [integer].
      */
-
     public $item_id;
+
+    /**
+     * The title of the service [string].
+     */
     public $title;
+
+    /**
+     * The WMS address [string].
+     */
     public $address;
+
+    /**
+     * The comma-delimited layer list [string].
+     */
     public $layers;
 
 
