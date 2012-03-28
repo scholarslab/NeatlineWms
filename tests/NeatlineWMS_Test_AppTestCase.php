@@ -31,6 +31,7 @@ class NLWMS_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         $this->user = $this->db->getTable('User')->find(1);
         $this->_authenticateUser($this->user);
+        $this->wmsTable = $this->db->getTable('NeatlineWms');
 
         // Set up Neatline WMS.
         $plugin_broker = get_plugin_broker();

@@ -23,7 +23,6 @@ class NLWMS_NeatlineWmsTest extends NLWMS_Test_AppTestCase
     public function setUp()
     {
         $this->setUpPlugin();
-        $this->wmsTable = $this->db->getTable('NeatlineWms');
     }
 
     /**

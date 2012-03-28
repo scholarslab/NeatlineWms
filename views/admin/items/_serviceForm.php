@@ -24,7 +24,7 @@
 <div class="field">
   <label for="layers">Layers</label>
   <div class="inputs">
-    <textarea cols="50" rows="2" id="address" class="textinput" name="address" ></textarea>
+    <textarea cols="50" rows="2" id="layers" class="textinput" name="layers" ></textarea>
   </div>
   <p class="explanation">Enter a comma-delimited list of layers.</p>
 </div>

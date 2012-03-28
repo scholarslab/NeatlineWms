@@ -27,12 +27,112 @@ class NLWMS_IndexControllerTest extends NLWMS_Test_AppTestCase
     }
 
     /**
-     * .
+     * There should be a web map service tab in the item add form.
      *
      * @return void.
      */
-    public function testStub()
+    public function testItemAddTab()
     {
+
+        // Hit item add.
+        $this->dispatch('items/add');
+
+        // Check for tab.
+        $this->assertXpathContentContains(
+            '//ul[@id="section-nav"]/li/a[@href="#web-map-service-metadata"]',
+            'Web Map Service'
+        );
+
+        // Check for textareas.
+        $this->assertXpath('//textarea[@id="address"][@name="address"]');
+        $this->assertXpath('//textarea[@id="layers"][@name="layers"]');
+
+    }
+
+    /**
+     * There should be a web map service tab in the item edit form.
+     *
+     * @return void.
+     */
+    public function testItemEditTab()
+    {
+
+        // Create item.
+        $item = new Item();
+        $item->save();
+
+        // Hit item edit.
+        $this->dispatch('items/edit/' . $item->id);
+
+        // Check for tab.
+        $this->assertXpathContentContains(
+            '//ul[@id="section-nav"]/li/a[@href="#web-map-service-metadata"]',
+            'Web Map Service'
+        );
+
+        // Check for textareas.
+        $this->assertXpath('//textarea[@id="address"][@name="address"]');
+        $this->assertXpath('//textarea[@id="layers"][@name="layers"]');
+
+    }
+
+    /**
+     * If there is an existing service for the item, the data should be
+     * populated in the textareas.
+     *
+     * @return void.
+     */
+    public function testItemEditData()
+    {
+
+
+    }
+
+    /**
+     * When an item is added and service data is entered, the service should
+     * be created.
+     *
+     * @return void.
+     */
+    public function testServiceCreationOnItemAdd()
+    {
+
+
+    }
+
+    /**
+     * When an item is edited and service data is entered, the service should
+     * be created.
+     *
+     * @return void.
+     */
+    public function testServiceCreationOnItemEdit()
+    {
+
+
+    }
+
+    /**
+     * When an item is edited and service data is changed, the service should
+     * be updated.
+     *
+     * @return void.
+     */
+    public function testServiceUpdateOnItemEdit()
+    {
+
+
+    }
+
+    /**
+     * When an item is edited and service data is deleted, the service should
+     * be deleted.
+     *
+     * @return void.
+     */
+    public function testServiceDeleteOnItemEdit()
+    {
+
 
     }
 
