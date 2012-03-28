@@ -75,6 +75,7 @@ class NeatlineWmsPlugin
         // Web map services table.
         $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_wms` (
                 `id`              int(10) unsigned not null auto_increment,
+                `item_id`         int(10) unsigned,
                 `title`           tinytext collate utf8_unicode_ci,
                 `address`         text collate utf8_unicode_ci,
                 `layers`          text collate utf8_unicode_ci,

@@ -38,6 +38,7 @@ class NLWMS_NeatlineWmsTest extends NLWMS_Test_AppTestCase
         $wms = new NeatlineWms();
 
         // Set.
+        $wms->item_id = 1;
         $wms->title = 'Test Title';
         $wms->address = 'http://test.edu:8080/geoserver/ws/wms';
         $wms->layers = 'ws:test1,ws:test2';
@@ -47,9 +48,48 @@ class NLWMS_NeatlineWmsTest extends NLWMS_Test_AppTestCase
         $wms = $this->wmsTable->find($wms->id);
 
         // Get.
+        $this->assertEquals($wms->item_id, 1);
         $this->assertEquals($wms->title, 'Test Title');
         $this->assertEquals($wms->address, 'http://test.edu:8080/geoserver/ws/wms');
         $this->assertEquals($wms->layers, 'ws:test1,ws:test2');
+
+    }
+
+    /**
+     * Test foreign key assignment when item is passed on instantiation.
+     *
+     * @return void.
+     */
+    public function testConstructKeyAssignments()
+    {
+
+        // Create item.
+        $item = $this->__item();
+
+        // Create a record.
+        $wms = new NeatlineWms($item);
+
+        // Check.
+        $this->assertEquals($wms->item_id, $item->id);
+
+    }
+
+    /**
+     * getItem() should return the parent item.
+     *
+     * @return void.
+     */
+    public function testGetItem()
+    {
+
+        // Create item.
+        $item = $this->__item();
+
+        // Create a record.
+        $wms = new NeatlineWms($item);
+
+        // Check ids.
+        $this->assertEquals($wms->getItem()->id, $item->id);
 
     }
 

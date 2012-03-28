@@ -19,9 +19,40 @@ class NeatlineWms extends Omeka_record
      * Record attributes.
      */
 
+    public $item_id;
     public $title;
     public $address;
     public $layers;
 
+
+    /**
+     * Set keys.
+     *
+     * @param Omeka_record $item The item record.
+     *
+     * @return void.
+     */
+    public function __construct($item = null)
+    {
+
+        parent::__construct();
+
+        // If defined, set the item key.
+        if (!is_null($item)) {
+            $this->item_id = $item->id;
+        }
+
+    }
+
+    /**
+     * Get the parent item.
+     *
+     * @return Item The item.
+     */
+    public function getItem()
+    {
+        $_itemsTable = $this->getTable('Item');
+        return $_itemsTable->find($this->item_id);
+    }
 
 }
