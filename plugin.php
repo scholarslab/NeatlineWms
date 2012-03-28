@@ -15,16 +15,16 @@
 
 // defines {{{
 
-if (!defined('NLEditons_PLUGIN_VERSION')) {
+if (!defined('NLWMS_PLUGIN_VERSION')) {
     define(
-        'NLEditions_PLUGIN_VERSION',
-        get_plugin_ini('NeatlineEditions', 'version')
+        'NLWMS_PLUGIN_VERSION',
+        get_plugin_ini('NeatlineWMS', 'version')
     );
 }
 
-if (!defined('NLEditions_PLUGIN_DIR')) {
+if (!defined('NLWMS_PLUGIN_DIR')) {
     define(
-        'NLEditions_PLUGIN_DIR',
+        'NLWMS_PLUGIN_DIR',
         dirname(__FILE__)
     );
 }
@@ -33,12 +33,11 @@ if (!defined('NLEditions_PLUGIN_DIR')) {
 
 
 // requires {{{
-require_once NLEditions_PLUGIN_DIR . '/NeatlineEditionsPlugin.php';
-require_once NLEditions_PLUGIN_DIR . '/helpers/NeatlineEditionsFunctions.php';
+require_once NLWMS_PLUGIN_DIR . '/NeatlineWmsPlugin.php';
 // }}}
 
 
 /*
  * Run.
  */
-new NeatlineEditionsPlugin;
+new NeatlineWmsPlugin;
