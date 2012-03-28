@@ -135,14 +135,12 @@ class NeatlineWmsPlugin
      *
      * @param array $tabs This is an array of label => URI pairs.
      *
-     * @return array The tabs array with the Neatline Maps tab.
+     * @return array The tabs array with the Neatline WMS tab.
      */
     public function adminNavigationMain($tabs)
     {
-
         $tabs['Neatline WMS'] = uri('neatline-wms');
         return $tabs;
-
     }
 
 }
