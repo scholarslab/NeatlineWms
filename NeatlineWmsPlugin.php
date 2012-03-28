@@ -24,7 +24,7 @@ class NeatlineWmsPlugin
     );
 
     private static $_filters = array(
-        'admin_navigation_main'
+        'admin_items_form_tabs'
     );
 
     /**
@@ -132,16 +132,22 @@ class NeatlineWmsPlugin
 
 
     /**
-     * Add link to main admin menu bar.
+     * Add tab to items add/edit.
      *
-     * @param array $tabs This is an array of label => URI pairs.
+     * @param array $tabs Associative array with tab name => markup.
      *
-     * @return array The tabs array with the Neatline WMS tab.
+     * @return array The tabs array with the Web Map Service tab.
      */
-    public function adminNavigationMain($tabs)
+    public function adminItemsFormTabs($tabs)
     {
-        $tabs['Neatline WMS'] = uri('neatline-wms');
+
+        // Insert tab.
+        $tabs['Web Map Service'] = __v()->partial(
+            'items/_serviceForm.php'
+        );
+
         return $tabs;
+
     }
 
 }

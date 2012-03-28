@@ -34,7 +34,6 @@ if (!defined('NLWMS_PLUGIN_DIR')) {
 
 // requires {{{
 require_once NLWMS_PLUGIN_DIR . '/NeatlineWmsPlugin.php';
-require_once NLWMS_PLUGIN_DIR . '/helpers/NeatlineWmsFunctions.php';
 // }}}
 
 
