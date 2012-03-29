@@ -72,4 +72,27 @@ class NLWMS_Test_AppTestCase extends Omeka_Test_AppTestCase
         return $item;
     }
 
+    /**
+     * Create a service.
+     *
+     * @return Omeka_record $service The service.
+     */
+    public function __service(
+        $item=null, $address='http://test/wms', $layers='test:layer1')
+    {
+
+        // If no item, create one.
+        if (is_null($item)) {
+            $item = $this->__item();
+        }
+
+        $service = new NeatlineWms($item);
+        $service->address = $address;
+        $service->layers = $layers;
+        $service->save();
+
+        return $service;
+
+    }
+
 }
