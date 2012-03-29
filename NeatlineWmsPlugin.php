@@ -156,7 +156,24 @@ class NeatlineWmsPlugin
     public function adminAppendToItemsShowPrimary()
     {
 
-        echo 'TEST';
+        // Get the item and service.
+        $item = get_current_item();
+        $service = $this->wmsTable->findByItem($item);
+
+        if ($service) {
+
+            // Create the renderer.
+            $map = new GeoserverMap_WMS($service);
+
+            echo __v()->partial('show.php', array(
+                'mapTitle' => $map->mapTitle,
+                'wmsAddress' => $map->wmsAddress,
+                'layers' => $map->layers,
+                'boundingBox' => $map->boundingBox,
+                'epsg' => $map->epsg
+            ));
+
+        }
 
     }
 
@@ -168,7 +185,24 @@ class NeatlineWmsPlugin
     public function publicAppendToItemsShow()
     {
 
-        echo 'TEST';
+        // Get the item and service.
+        $item = get_current_item();
+        $service = $this->wmsTable->findByItem($item);
+
+        if ($service) {
+
+            // Create the renderer.
+            $map = new GeoserverMap_WMS($service);
+
+            echo __v()->partial('show.php', array(
+                'mapTitle' => $map->mapTitle,
+                'wmsAddress' => $map->wmsAddress,
+                'layers' => $map->layers,
+                'boundingBox' => $map->boundingBox,
+                'epsg' => $map->epsg
+            ));
+
+        }
 
     }
 

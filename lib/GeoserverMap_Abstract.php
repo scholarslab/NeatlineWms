@@ -16,7 +16,7 @@
  * }}}
  */
 
-abstract class GeoserverMap_Abstract
+abstract class Map_Abstract
 {
 
     /**

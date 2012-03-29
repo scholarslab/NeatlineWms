@@ -16,7 +16,7 @@
  * }}}
  */
 
-class GeoserverMap_WMS extends GeoserverMap_Abstract
+class GeoserverMap_WMS extends Map_Abstract
 {
 
     /**
@@ -51,9 +51,7 @@ class GeoserverMap_WMS extends GeoserverMap_Abstract
      */
     public function _getMapTitle()
     {
-        return nlwms_getItemMetadata(
-            $this->map->getItem(), 'Dublin Core', 'Title'
-        );
+        return $this->map->getItem()->id;
     }
 
     /**
@@ -88,7 +86,7 @@ class GeoserverMap_WMS extends GeoserverMap_Abstract
 
         // Query for names, filter out layers without an Omeka map file.
         foreach ($layers as $layer) {
-            if (in_array($layer->Title, $layersArray)) {
+            if (in_array($layer->Name, $layersArray)) {
                 $activeLayers[] = $layer;
             }
         }
@@ -140,18 +138,10 @@ class GeoserverMap_WMS extends GeoserverMap_Abstract
 
         // Query for the layers.
         $capabilities = new SimpleXMLElement($this->capabilitiesXml);
-        $layers = $capabilities->xpath('//*[local-name()="Layer"][@queryable=1]');
+        $capabilities->registerXPathNamespace('gis', 'http://www.opengis.net/wms');
+        $layers = $capabilities->xpath('//gis:Layer[@queryable="1"]');
 
-        $layersArray = explode(',', $this->layers);
-
-        // Query for names, filter out layers without an Omeka map file.
-        foreach ($layers as $layer) {
-            if ($layer->Title == $layersArray[0]) {
-                $activeLayer = $layer;
-            }
-        }
-
-        return $activeLayer->BoundingBox->attributes()->CRS;
+        return $layers[0]->BoundingBox->attributes()->CRS;
 
     }
 
