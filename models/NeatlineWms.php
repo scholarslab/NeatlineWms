@@ -21,11 +21,6 @@ class NeatlineWms extends Omeka_record
     public $item_id;
 
     /**
-     * The title of the service [string].
-     */
-    public $title;
-
-    /**
      * The WMS address [string].
      */
     public $address;

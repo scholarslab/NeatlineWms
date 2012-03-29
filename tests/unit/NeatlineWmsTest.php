@@ -38,7 +38,6 @@ class NLWMS_NeatlineWmsTest extends NLWMS_Test_AppTestCase
 
         // Set.
         $wms->item_id = 1;
-        $wms->title = 'Test Title';
         $wms->address = 'http://test.edu:8080/geoserver/ws/wms';
         $wms->layers = 'ws:test1,ws:test2';
         $wms->save();
@@ -48,7 +47,6 @@ class NLWMS_NeatlineWmsTest extends NLWMS_Test_AppTestCase
 
         // Get.
         $this->assertEquals($wms->item_id, 1);
-        $this->assertEquals($wms->title, 'Test Title');
         $this->assertEquals($wms->address, 'http://test.edu:8080/geoserver/ws/wms');
         $this->assertEquals($wms->layers, 'ws:test1,ws:test2');
 
