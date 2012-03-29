@@ -20,7 +20,8 @@ class NeatlineWmsPlugin
     private static $_hooks = array(
         'install',
         'uninstall',
-        'define_routes'
+        'define_routes',
+        'after_save_form_item'
     );
 
     private static $_filters = array(
@@ -35,6 +36,7 @@ class NeatlineWmsPlugin
     public function __construct()
     {
         $this->_db = get_db();
+        $this->wmsTable = $this->_db->getTable('NeatlineWms');
         self::addHooksAndFilters();
     }
 
@@ -124,6 +126,26 @@ class NeatlineWmsPlugin
 
     }
 
+    /**
+     * Process WMS data on item add/edit.
+     *
+     * @param Item $record The item.
+     * @param array $post The complete $_POST.
+     *
+     * @return void.
+     */
+    public function afterSaveFormItem($record, $post)
+    {
+
+        // Get WMS address and layers.
+        $address = $post['address'];
+        $layers = $post['layers'];
+
+        // Create/update/delete.
+        $this->wmsTable->createOrUpdate($record, $address, $layers);
+
+    }
+
 
     /**
      * Filter callbacks:
@@ -140,9 +162,22 @@ class NeatlineWmsPlugin
     public function adminItemsFormTabs($tabs)
     {
 
+        // Set service false by default.
+        $service = false;
+
+        // Get item.
+        $item = get_current_item();
+
+        // If there is an item, try to get a service.
+        if (!is_null($item->id)) {
+            $service = $this->wmsTable->findByItem($item);
+        }
+
         // Insert tab.
         $tabs['Web Map Service'] = __v()->partial(
-            'items/_serviceForm.php'
+          'items/_serviceForm.php', array(
+            'service' => $service
+          )
         );
 
         return $tabs;

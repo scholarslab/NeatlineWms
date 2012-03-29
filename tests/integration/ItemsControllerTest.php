@@ -85,6 +85,22 @@ class NLWMS_IndexControllerTest extends NLWMS_Test_AppTestCase
     public function testItemEditData()
     {
 
+        // Create item and service.
+        $item = $this->__item();
+        $service = $this->__service($item, 'address', 'layers');
+
+        // Hit item edit.
+        $this->dispatch('items/edit/' . $item->id);
+
+        // Check for populated form.
+        $this->assertXpathContentContains(
+            '//textarea[@id="address"][@name="address"]',
+            'address'
+        );
+        $this->assertXpath(
+            '//textarea[@id="layers"][@name="layers"]',
+            'layers'
+        );
 
     }
 
@@ -97,6 +113,31 @@ class NLWMS_IndexControllerTest extends NLWMS_Test_AppTestCase
     public function testServiceCreationOnItemAdd()
     {
 
+        // Capture starting count.
+        $count = $this->wmsTable->count();
+
+        // Set exhibit id.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'public' => 1,
+                'featured' => 0,
+                'Elements' => array(),
+                'order' => array(),
+                'address' => 'address',
+                'layers' => 'layers'
+            )
+        );
+
+        // Hit item edit.
+        $this->dispatch('items/add');
+
+        // +1 editions.
+        $this->assertEquals($this->wmsTable->count(), $count+1);
+
+        // Get out service and check.
+        $service = $this->wmsTable->find(1);
+        $this->assertEquals($service->address, 'address');
+        $this->assertEquals($service->layers, 'layers');
 
     }
 
@@ -109,6 +150,34 @@ class NLWMS_IndexControllerTest extends NLWMS_Test_AppTestCase
     public function testServiceCreationOnItemEdit()
     {
 
+        // Create item.
+        $item = $this->__item();
+
+        // Capture starting count.
+        $count = $this->wmsTable->count();
+
+        // Set exhibit id.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'public' => 1,
+                'featured' => 0,
+                'Elements' => array(),
+                'order' => array(),
+                'address' => 'address',
+                'layers' => 'layers'
+            )
+        );
+
+        // Hit item edit.
+        $this->dispatch('items/edit/' . $item->id);
+
+        // +1 editions.
+        $this->assertEquals($this->wmsTable->count(), $count+1);
+
+        // Get out service and check.
+        $service = $this->wmsTable->find(1);
+        $this->assertEquals($service->address, 'address');
+        $this->assertEquals($service->layers, 'layers');
 
     }
 
@@ -121,6 +190,35 @@ class NLWMS_IndexControllerTest extends NLWMS_Test_AppTestCase
     public function testServiceUpdateOnItemEdit()
     {
 
+        // Create item and service.
+        $item = $this->__item();
+        $service = $this->__service($item, 'address1', 'layers1');
+
+        // Capture starting count.
+        $count = $this->wmsTable->count();
+
+        // Set exhibit id.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'public' => 1,
+                'featured' => 0,
+                'Elements' => array(),
+                'order' => array(),
+                'address' => 'address2',
+                'layers' => 'layers2'
+            )
+        );
+
+        // Hit item edit.
+        $this->dispatch('items/edit/' . $item->id);
+
+        // +1 editions.
+        $this->assertEquals($this->wmsTable->count(), $count);
+
+        // Get out service and check.
+        $service = $this->wmsTable->find(1);
+        $this->assertEquals($service->address, 'address2');
+        $this->assertEquals($service->layers, 'layers2');
 
     }
 
@@ -132,6 +230,34 @@ class NLWMS_IndexControllerTest extends NLWMS_Test_AppTestCase
      */
     public function testServiceDeleteOnItemEdit()
     {
+
+        // Create item and service.
+        $item = $this->__item();
+        $service = $this->__service($item, 'address1', 'layers1');
+
+        // Capture starting count.
+        $count = $this->wmsTable->count();
+
+        // Set exhibit id.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'public' => 1,
+                'featured' => 0,
+                'Elements' => array(),
+                'order' => array(),
+                'address' => '',
+                'layers' => ''
+            )
+        );
+
+        // Hit item edit.
+        $this->dispatch('items/edit/' . $item->id);
+
+        // +1 editions.
+        $this->assertEquals($this->wmsTable->count(), $count-1);
+
+        // Check for no service.
+        $this->assertFalse($this->wmsTable->findByItem($item));
 
 
     }

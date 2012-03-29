@@ -16,7 +16,7 @@
 <div class="field">
   <label for="address">WMS Address</label>
   <div class="inputs">
-    <textarea cols="50" rows="2" id="address" class="textinput" name="address" ></textarea>
+    <textarea cols="50" rows="2" id="address" class="textinput" name="address" ><?php if ($service) { echo $service->address; } ?></textarea>
   </div>
   <p class="explanation">Enter the WMS address of the map.</p>
 </div>
@@ -24,7 +24,7 @@
 <div class="field">
   <label for="layers">Layers</label>
   <div class="inputs">
-    <textarea cols="50" rows="2" id="layers" class="textinput" name="layers" ></textarea>
+    <textarea cols="50" rows="2" id="layers" class="textinput" name="layers" ><?php if ($service) { echo $service->address; } ?></textarea>
   </div>
   <p class="explanation">Enter a comma-delimited list of layers.</p>
 </div>
