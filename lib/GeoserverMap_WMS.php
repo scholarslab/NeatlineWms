@@ -65,6 +65,34 @@ class GeoserverMap_WMS extends Map_Abstract
     }
 
     /**
+     * Check to see if the layers exist.
+     *
+     * @return string $layers The constructed string.
+     */
+    public function _isValid()
+    {
+
+        // Query for the layers.
+        $capabilities = new SimpleXMLElement($this->capabilitiesXml);
+        $capabilities->registerXPathNamespace('gis', 'http://www.opengis.net/wms');
+        $layers = $capabilities->xpath('//gis:Layer[@queryable="1"]');
+
+        $layersArray = explode(',', $this->layers);
+        $activeLayers = array();
+
+        // Query for names, filter out layers without an Omeka map file.
+        foreach ($layers as $layer) {
+            if (in_array($layer->Name, $layersArray)) {
+                $activeLayers[] = $layer;
+            }
+        }
+
+        return count($layersArray) == count($activeLayers);
+
+
+    }
+
+    /**
      * Calculate a bounding box based on the individual bounding boxes for each of the layers
      * that will show all layers at once. This is more difficult than just choosing the box for
      * the first layer, but it makes it possible to puts dozens of layers on a map without having

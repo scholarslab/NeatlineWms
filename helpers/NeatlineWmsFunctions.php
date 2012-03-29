@@ -61,3 +61,42 @@ function nlwms_getItemMetadata($item, $elementSet, $elementName)
     return $text;
 
 }
+
+/**
+ * Render the map partial.
+ *
+ * @param Omeka_record $item The parent item.
+ *
+ * @return string $text The element text content.
+ */
+function nlwms_renderMap($item)
+{
+
+    // Get table.
+    $_db = get_db();
+    $_wmsTable = $_db->getTable('NeatlineWms');
+
+    // Try to get the service.
+    $service = $_wmsTable->findByItem($item);
+
+    // If a service exists, render it.
+    if ($service) {
+
+        // Create the renderer.
+        $map = new GeoserverMap_WMS($service);
+
+        if ($map->_isValid()) {
+
+          return __v()->partial('show.php', array(
+              'mapTitle' => $map->mapTitle,
+              'wmsAddress' => $map->wmsAddress,
+              'layers' => $map->layers,
+              'boundingBox' => $map->boundingBox,
+              'epsg' => $map->epsg
+          ));
+
+        }
+
+    }
+
+}

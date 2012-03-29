@@ -54,23 +54,29 @@ jQuery(document).ready(function() {
 
     map = new OpenLayers.Map('WMS-<?php echo $mapTitle; ?>', options);
 
-    tiled = new OpenLayers.Layer.WMS(
-        "Tiled", "<?php echo $wmsAddress; ?>",
-        {
-            LAYERS: '<?php echo $layers; ?>',
-            STYLES: '',
-            format: 'image/jpeg',
-            tiled: !pureCoverage,
-            tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom
-        },
-        {
-            buffer: 0,
-            displayOutsideMaxExtent: true,
-            isBaseLayer: true
-        }
-    );
+    var layers = [];
+    jQuery.each('<?php echo $layers; ?>'.split(','), function(i, layer) {
 
-    map.addLayers([tiled]);
+      layers.push(new OpenLayers.Layer.WMS(
+          layer, "<?php echo $wmsAddress; ?>",
+          {
+              LAYERS: layer,
+              STYLES: '',
+              format: 'image/png8',
+              tiled: !pureCoverage,
+              tilesOrigin : map.maxExtent.left + ',' + map.maxExtent.bottom,
+              trasparent: true
+          },
+          {
+              buffer: 0,
+              displayOutsideMaxExtent: true,
+              isBaseLayer: true
+          }
+      ));
+
+    });
+
+    map.addLayers(layers);
     map.zoomToExtent(bounds);
 
 });
