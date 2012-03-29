@@ -51,7 +51,9 @@ class GeoserverMap_WMS extends GeoserverMap_Abstract
      */
     public function _getMapTitle()
     {
-        return 'TEST';
+        return nlwms_getItemMetadata(
+            $this->map->getItem(), 'Dublin Core', 'Title'
+        );
     }
 
     /**
@@ -81,15 +83,8 @@ class GeoserverMap_WMS extends GeoserverMap_Abstract
         $capabilities->registerXPathNamespace('gis', 'http://www.opengis.net/wms');
         $layers = $capabilities->xpath('//gis:Layer[@queryable="1"]');
 
-        $layersArray = array();
+        $layersArray = explode(',', $this->layers);
         $activeLayers = array();
-
-        // Get the maps/files associated with the item, pull out the base filenames.
-        $files = $this->map->getOmekaFiles($this->map);
-        foreach ($files as $file) {
-            $fileName = explode('.', $file->original_filename);
-            $layersArray[] = $fileName[0];
-        }
 
         // Query for names, filter out layers without an Omeka map file.
         foreach ($layers as $layer) {
@@ -147,16 +142,11 @@ class GeoserverMap_WMS extends GeoserverMap_Abstract
         $capabilities = new SimpleXMLElement($this->capabilitiesXml);
         $layers = $capabilities->xpath('//*[local-name()="Layer"][@queryable=1]');
 
-        $layersArray = array();
-
-        $files = $this->map->getOmekaFiles();
-        $fileName = explode('.', $files[0]->original_filename);
-
-        // What if different files on the map have different projections??
+        $layersArray = explode(',', $this->layers);
 
         // Query for names, filter out layers without an Omeka map file.
         foreach ($layers as $layer) {
-            if ($layer->Title == $fileName[0]) {
+            if ($layer->Title == $layersArray[0]) {
                 $activeLayer = $layer;
             }
         }

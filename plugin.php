@@ -34,6 +34,9 @@ if (!defined('NLWMS_PLUGIN_DIR')) {
 
 // requires {{{
 require_once NLWMS_PLUGIN_DIR . '/NeatlineWmsPlugin.php';
+require_once NLWMS_PLUGIN_DIR . '/helpers/NeatlineWmsFunctions.php';
+require_once NLWMS_PLUGIN_DIR . '/lib/GeoserverMap_Abstract.php';
+require_once NLWMS_PLUGIN_DIR . '/lib/GeoserverMap_WMS.php';
 // }}}
 
 
