@@ -21,7 +21,9 @@ class NeatlineWmsPlugin
         'install',
         'uninstall',
         'define_routes',
-        'after_save_form_item'
+        'after_save_form_item',
+        'admin_append_to_items_show_primary',
+        'public_append_to_items_show'
     );
 
     private static $_filters = array(
@@ -143,6 +145,30 @@ class NeatlineWmsPlugin
 
         // Create/update/delete.
         $this->wmsTable->createOrUpdate($record, $address, $layers);
+
+    }
+
+    /**
+     * Show WMS in admin items show.
+     *
+     * @return void.
+     */
+    public function adminAppendToItemsShowPrimary()
+    {
+
+        echo 'TEST';
+
+    }
+
+    /**
+     * Show WMS in public items show.
+     *
+     * @return void.
+     */
+    public function publicAppendToItemsShow()
+    {
+
+        echo 'TEST';
 
     }
 
