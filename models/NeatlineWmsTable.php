@@ -72,4 +72,27 @@ class NeatlineWmsTable extends Omeka_Db_Table
 
     }
 
+    /**
+     * Get services for dropdown select, using the title of the parent item
+     * as the text value for the listing.
+     *
+     * @return array $services The constructed array.
+     */
+    public function getServicesForSelect()
+    {
+
+        // Get service records.
+        $services = $this->fetchObjects($this->getSelect());
+
+        // Walk the records, build array.
+        $options = array('none' => '-');
+        foreach ($services as $service) {
+            $options[$service->id] = nlwms_getItemMetadata(
+                $service->getItem(), 'Dublin Core', 'Title');
+        }
+
+        return $options;
+
+    }
+
 }

@@ -140,4 +140,50 @@ class NLWMS_NeatlineWmsTableTest extends NLWMS_Test_AppTestCase
 
     }
 
+    /**
+     * getServicesForSelect() should return an array with 'none' => '1' when
+     * there are no services.
+     *
+     * @return void.
+     */
+    public function testGetServicesForSelectWithNoServices()
+    {
+        $this->assertEquals(
+            $this->wmsTable->getServicesForSelect(),
+            array('none' => '-')
+        );
+    }
+
+    /**
+     * getServicesForSelect() should return an array with format #{service id}
+     * => #{parent item title} when services exist.
+     *
+     * @return void.
+     */
+    public function testGetServicesForSelectWithServices()
+    {
+
+        // Create items.
+        $item1 = $this->__item();
+        $item2 = $this->__item();
+
+        // Create title texts.
+        $this->__text($item1, 'Dublin Core', 'Title', 'Title 1');
+        $this->__text($item2, 'Dublin Core', 'Title', 'Title 2');
+
+        // Create services for the items.
+        $service1 = $this->__service($item1);
+        $service2 = $this->__service($item2);
+
+        // Get services.
+        $services = $this->wmsTable->getServicesForSelect();
+
+        // Check construction.
+        $this->assertEquals(count($services), 3);
+        $this->assertEquals($services['none'], '-');
+        $this->assertEquals($services[$service1->id], 'Title 1');
+        $this->assertEquals($services[$service2->id], 'Title 2');
+
+    }
+
 }
