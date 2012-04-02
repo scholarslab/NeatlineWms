@@ -23,7 +23,8 @@ class NeatlineWmsPlugin
         'define_routes',
         'after_save_form_item',
         'admin_append_to_items_show_primary',
-        'public_append_to_items_show'
+        'public_append_to_items_show',
+        'before_delete_item'
     );
 
     private static $_filters = array(
@@ -168,6 +169,19 @@ class NeatlineWmsPlugin
     {
         $item = get_current_item();
         echo nlwms_renderMap($item);
+    }
+
+    /**
+     * On item delete, delete associated WMS.
+     *
+     * @param Omeka_record $item The item.
+     *
+     * @return void.
+     */
+    public function beforeDeleteItem($item)
+    {
+        $wms = $this->wmsTable->findByItem($item);
+        if ($wms) { $wms->delete(); }
     }
 
 
