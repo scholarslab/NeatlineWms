@@ -24,6 +24,7 @@ class NeatlineWmsPlugin
         'after_save_form_item',
         'admin_append_to_items_show_primary',
         'public_append_to_items_show',
+        'after_insert_file',
         'before_delete_item'
     );
 
@@ -169,6 +170,19 @@ class NeatlineWmsPlugin
     {
         $item = get_current_item();
         echo nlwms_renderMap($item);
+    }
+
+    /**
+     * When a file is inserted, check to see if it is a georectified
+     * tiff. If so, try to put it to Geoserver.
+     *
+     * @param Omeka_record $file The file.
+     *
+     * @return void.
+     */
+    public function afterInsertFile($file)
+    {
+
     }
 
     /**
