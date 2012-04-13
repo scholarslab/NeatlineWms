@@ -24,7 +24,7 @@ class NeatlineWmsPlugin
         'after_save_form_item',
         'admin_append_to_items_show_primary',
         'public_append_to_items_show',
-        'after_insert_file',
+        'after_save_form_record',
         'before_delete_item'
     );
 
@@ -173,14 +173,15 @@ class NeatlineWmsPlugin
     }
 
     /**
-     * When a file is inserted, check to see if it is a georectified
+     * When a an item is saved, check to see if it is a georectified
      * tiff. If so, try to put it to Geoserver.
      *
-     * @param Omeka_record $file The file.
+     * @param Omeka_record $record The item.
+     * @param array $post The $_POST.
      *
      * @return void.
      */
-    public function afterInsertFile($file)
+    public function afterSaveFormRecord($record, $post)
     {
 
     }
