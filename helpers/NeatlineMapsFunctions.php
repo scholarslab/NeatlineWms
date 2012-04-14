@@ -148,10 +148,9 @@ function _putFileToGeoserver($file, $server)
     curl_setopt($ch, CURLOPT_INFILE, fopen($zipFileName, "r"));
     curl_setopt($ch, CURLOPT_PUTFIELDS, $zipFileName);
 
-    $successCode = 201;
     $buffer = curl_exec($ch);
     $info = curl_getinfo($ch);
 
-    return ($info['http_code'] == $successCode);
+    return ($info['http_code'] == 201);
 
 }

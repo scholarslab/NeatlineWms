@@ -91,9 +91,6 @@ class NeatlineWmsTable extends Omeka_Db_Table
             return false;
         }
 
-        // Get layer name.
-        $layer = explode('.', $file->original_filename);
-
         // Create service.
         $wms = new NeatlineWms($item);
         $wms->address = $server->getWmsAddress();
