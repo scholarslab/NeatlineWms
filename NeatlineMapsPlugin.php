@@ -79,6 +79,20 @@ class NeatlineMapsPlugin
     public function install()
     {
 
+        // Servers table.
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_maps_servers` (
+                `id`              int(10) unsigned not null auto_increment,
+                `name`            tinytext collate utf8_unicode_ci,
+                `url`             tinytext collate utf8_unicode_ci,
+                `username`        tinytext collate utf8_unicode_ci,
+                `password`        tinytext collate utf8_unicode_ci,
+                `namespace`       tinytext collate utf8_unicode_ci,
+                `active`          tinyint(1) NOT NULL,
+                 PRIMARY KEY (`id`)
+               ) ENGINE=innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+
+        $this->_db->query($sql);
+
         // Web map services table.
         $sql = "CREATE TABLE IF NOT EXISTS `{$this->_db->prefix}neatline_wms` (
                 `id`              int(10) unsigned not null auto_increment,
@@ -100,7 +114,11 @@ class NeatlineMapsPlugin
     public function uninstall()
     {
 
-        // Drop the editions table.
+        // Drop the servers table.
+        $sql = "DROP TABLE IF EXISTS `{$this->_db->prefix}neatline_servers`";
+        $this->_db->query($sql);
+
+        // Drop the services table.
         $sql = "DROP TABLE IF EXISTS `{$this->_db->prefix}neatline_wms`";
         $this->_db->query($sql);
 
@@ -120,7 +138,7 @@ class NeatlineMapsPlugin
         $router->addRoute(
             'neatlineMaps',
             new Zend_Controller_Router_Route(
-                'neatline-maps/servers/:action',
+                'neatline-maps/:action',
                 array(
                     'module'        => 'neatline-maps',
                     'controller'    => 'servers',
