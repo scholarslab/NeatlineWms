@@ -237,4 +237,32 @@ class NLMAPS_ServersControllerTest extends NLMAPS_Test_AppTestCase
 
     }
 
+    /**
+     * Test for edit form markup.
+     *
+     * @return void.
+     */
+    public function testEditServerFormMarkup()
+    {
+
+        // Create server.
+        $server = $this->__server(
+            'Test Title',
+            'http://localhost:8080/geoserver',
+            'workspace',
+            'admin',
+            'geoserver',
+            1
+        );
+
+        $this->dispatch('neatline-maps/edit/' . $server->id);
+        $this->assertXpath('//input[@name="name"][@value="Test Title"]');
+        $this->assertXpath('//input[@name="url"][@value="http://localhost:8080/geoserver"]');
+        $this->assertXpath('//input[@name="workspace"][@value="workspace"]');
+        $this->assertXpath('//input[@name="username"][@value="admin"]');
+        $this->assertXpath('//input[@name="password"][@value="geoserver"]');
+        $this->assertXpath('//input[@name="active"][@checked="checked"]');
+
+    }
+
 }
