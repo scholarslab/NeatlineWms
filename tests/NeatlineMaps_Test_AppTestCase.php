@@ -13,6 +13,7 @@
  */
 
 require_once '../NeatlineMapsPlugin.php';
+require_once 'mocks/FileMock.php';
 
 class NLMAPS_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
@@ -160,6 +161,29 @@ class NLMAPS_Test_AppTestCase extends Omeka_Test_AppTestCase
         $server->save();
 
         return $server;
+
+    }
+
+    /**
+     * Mock a file.
+     *
+     * @return StdClass $file The mock.
+     */
+    public function __file(
+        $item=null,
+        $originalFilename='test.tif')
+    {
+
+        // If no item, create one.
+        if (is_null($item)) {
+            $item = $this->__item();
+        }
+
+        $file = new FileMock;
+        $file->item_id = $item->id;
+        $file->original_filename = $originalFilename;
+
+        return $file;
 
     }
 

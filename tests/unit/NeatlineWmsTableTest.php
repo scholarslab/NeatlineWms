@@ -141,6 +141,73 @@ class NLMAPS_NeatlineWmsTableTest extends NLMAPS_Test_AppTestCase
     }
 
     /**
+     * createFromFileAndServer() should return false and not create a new
+     * service when a service already exists for the file's parent item.
+     *
+     * @return void.
+     */
+    public function testCreateFromFileAndServerWithExistingService()
+    {
+
+        // Create item and service.
+        $item = $this->__item();
+        $service = $this->__service($item, 'address1', 'layers1');
+
+        // Create server, mock file.
+        $server = $this->__server();
+        $file = $this->__file($item, 'test.tif');
+
+        // Capture starting count.
+        $count = $this->wmsTable->count();
+
+        // Try to create new service.
+        $this->assertFalse($this->wmsTable->createFromFileAndServer($file, $server));
+
+        // Check for count.
+        $this->assertEquals($this->wmsTable->count(), $count);
+
+    }
+
+    /**
+     * createFromFileAndServer() should create a new service when a service
+     * does not already exists for the file's parent item.
+     *
+     * @return void.
+     */
+    public function testCreateFromFileAndServerWithoutExistingService()
+    {
+
+        // Create item.
+        $item = $this->__item();
+
+        // Create server, mock file.
+        $server = $this->__server();
+        $file = $this->__file($item, 'test.tif');
+
+        // Capture starting count.
+        $count = $this->wmsTable->count();
+
+        // Create new service.
+        $wms = $this->wmsTable->createFromFileAndServer($file, $server);
+
+        // Check for count.
+        $this->assertEquals($this->wmsTable->count(), $count+1);
+
+        // Check address.
+        $this->assertEquals(
+            $wms->address,
+            $server->getWmsAddress()
+        );
+
+        // Check layers.
+        $this->assertEquals(
+            $wms->layers,
+            $server->namespace . ':test'
+        );
+
+    }
+
+    /**
      * getServicesForSelect() should return an array with 'none' => '1' when
      * there are no services.
      *

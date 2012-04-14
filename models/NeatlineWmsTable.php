@@ -88,7 +88,7 @@ class NeatlineWmsTable extends Omeka_Db_Table
 
         // If the parent item already has a service, break;
         if ($this->findByItem($item)) {
-            return;
+            return false;
         }
 
         // Get layer name.
@@ -99,6 +99,8 @@ class NeatlineWmsTable extends Omeka_Db_Table
         $wms->address = $server->getWmsAddress();
         $wms->layers = $server->namespace . ':' . $layer[0];
         $wms->save();
+
+        return $wms;
 
     }
 
