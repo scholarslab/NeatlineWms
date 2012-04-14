@@ -211,11 +211,7 @@ class NeatlineMapsPlugin
                 // If no WMS exists, create one for the file that
                 // was just uploaded to Geoserver.
                 if (!$wms) {
-
-                    // $newWms = new NeatlineWms($item);
-                    // $newWms->address = $server->getWmsAddress();
-                    // $newWms->layers = $file->original_filename;
-
+                    $this->wmsTable->createFromFileAndServer($file, $server);
                 }
 
             }

@@ -42,7 +42,7 @@ class NeatlineWmsTable extends Omeka_Db_Table
      * @param Omeka_record $item The item.
      * @param Omeka_record $exhibit The exhibit.
      *
-     * @return Omeka_record $edition The new or updated edition.
+     * @return Omeka_record $edition The new or updated service.
      */
     public function createOrUpdate($item, $address, $layers)
     {
@@ -69,6 +69,36 @@ class NeatlineWmsTable extends Omeka_Db_Table
         }
 
         return $record;
+
+    }
+
+    /**
+     * Create a new service for a file and a server.
+     *
+     * @param Omeka_record $file The file.
+     * @param Omeka_record $server The server.
+     *
+     * @return Omeka_record $edition The new service.
+     */
+    public function createFromFileAndServer($file, $server)
+    {
+
+        // Get parent item.
+        $item = $file->getItem();
+
+        // If the parent item already has a service, break;
+        if ($this->findByItem($item)) {
+            return;
+        }
+
+        // Get layer name.
+        $layer = explode('.', $file->original_filename);
+
+        // Create service.
+        $wms = new NeatlineWms($item);
+        $wms->address = $server->getWmsAddress();
+        $wms->layers = $server->namespace . ':' . $layer[0];
+        $wms->save();
 
     }
 
