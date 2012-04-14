@@ -208,4 +208,33 @@ class NLMAPS_ServersControllerTest extends NLMAPS_Test_AppTestCase
 
     }
 
+    /**
+     * The /active route should set the server to active.
+     *
+     * @return void.
+     */
+    public function testSetActive()
+    {
+
+        // Create two servers.
+        $this->__server();
+        $this->__server();
+
+        // At start, server2 is active.
+        $server1 = $this->serversTable->find(1);
+        $server2 = $this->serversTable->find(2);
+        $this->assertEquals($server1->active, 0);
+        $this->assertEquals($server2->active, 1);
+
+        // Activate.
+        $this->dispatch('neatline-maps/active/1');
+
+        // Get servers, check active statuses.
+        $server1 = $this->serversTable->find(1);
+        $server2 = $this->serversTable->find(2);
+        $this->assertEquals($server1->active, 1);
+        $this->assertEquals($server2->active, 0);
+
+    }
+
 }
