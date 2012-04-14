@@ -22,11 +22,10 @@ class NeatlineMapsServerTable extends Omeka_Db_Table
      *
      * @return boolean True if insert succeeds.
      */
-    public function createServer($post)
+    public function updateServer($server, $post)
     {
 
         // Create server.
-        $server = new NeatlineMapsServer;
         $server->name = $post['name'];
         $server->url = $post['url'];
         $server->namespace = $post['workspace'];

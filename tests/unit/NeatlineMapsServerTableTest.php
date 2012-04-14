@@ -26,45 +26,50 @@ class NLMAPS_NeatlineMapsServerTableTest extends NLMAPS_Test_AppTestCase
     }
 
     /**
-     * createServer() should create a new server record.
+     * updateServer() should update a server record.
      *
      * @return void.
      */
-    public function testCreateServer()
+    public function testUpdateServer()
     {
+
+        // Create server.
+        $server = $this->__server();
 
         // Mock post.
         $post = array(
-            'name' => 'Test Server',
-            'url' => 'http://localhost:8080/geoserver',
-            'workspace' => 'workspace',
-            'username' => 'admin',
-            'password' => 'geoserver',
+            'name' => 'New Title',
+            'url' => 'http://new.org/geoserver',
+            'workspace' => 'newworkspace',
+            'username' => 'username',
+            'password' => 'password',
             'active' => 1
         );
 
         // Pass in the new data.
-        $this->serversTable->createServer($post);
-        $newServer = $this->serversTable->find(1);
+        $this->serversTable->updateServer($server, $post);
+        $newServer = $this->serversTable->find($server->id);
 
         // Check for updated values.
-        $this->assertEquals($this->serversTable->count(), 1);
-        $this->assertEquals($newServer->name, 'Test Server');
-        $this->assertEquals($newServer->url, 'http://localhost:8080/geoserver');
-        $this->assertEquals($newServer->namespace, 'workspace');
-        $this->assertEquals($newServer->username, 'admin');
-        $this->assertEquals($newServer->password, 'geoserver');
+        $this->assertEquals($newServer->name, 'New Title');
+        $this->assertEquals($newServer->url, 'http://new.org/geoserver');
+        $this->assertEquals($newServer->namespace, 'newworkspace');
+        $this->assertEquals($newServer->username, 'username');
+        $this->assertEquals($newServer->password, 'password');
         $this->assertEquals($newServer->active, 1);
 
     }
 
     /**
-     * createServer() should remove a trailing slash off the URL.
+     * updateServer() should remove a trailing slash off the URL.
      *
      * @return void.
      */
-    public function testCreateServerTrailingSlashRemoval()
+    public function testUpdateServerTrailingSlashRemoval()
     {
+
+        // Create server.
+        $server = $this->__server();
 
         // Mock post.
         $post = array(
@@ -77,17 +82,11 @@ class NLMAPS_NeatlineMapsServerTableTest extends NLMAPS_Test_AppTestCase
         );
 
         // Pass in the new data.
-        $this->serversTable->createServer($post);
-        $newServer = $this->serversTable->find(1);
+        $this->serversTable->updateServer($server, $post);
+        $newServer = $this->serversTable->find($server->id);
 
         // Check for updated values.
-        $this->assertEquals($this->serversTable->count(), 1);
-        $this->assertEquals($newServer->name, 'Test Server');
         $this->assertEquals($newServer->url, 'http://localhost:8080/geoserver');
-        $this->assertEquals($newServer->namespace, 'workspace');
-        $this->assertEquals($newServer->username, 'admin');
-        $this->assertEquals($newServer->password, 'geoserver');
-        $this->assertEquals($newServer->active, 1);
 
     }
 

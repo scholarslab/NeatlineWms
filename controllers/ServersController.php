@@ -43,7 +43,8 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
     public function addAction()
     {
 
-        // Create form.
+        // Create server and form.
+        $server = new NeatlineMapsServer;
         $form = new ServerForm;
 
         // If a form as been posted.
@@ -56,7 +57,7 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
             if ($form->isValid($post)) {
 
                 // Create server.
-                $this->serversTable->createServer($post);
+                $this->serversTable->updateServer($server, $post);
 
                 // Redirect to browse.
                 $this->redirect->goto('browse');
