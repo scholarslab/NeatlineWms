@@ -22,9 +22,9 @@ class NeatlineMapsPlugin
         'uninstall',
         'define_routes',
         'after_save_form_item',
+        'after_insert_file',
         'admin_append_to_items_show_primary',
         'public_append_to_items_show',
-        'after_save_form_record',
         'before_delete_item'
     );
 
@@ -172,15 +172,34 @@ class NeatlineMapsPlugin
      *
      * @return void.
      */
-    public function afterSaveFormItem($record, $post)
+    public function afterSaveFormItem($item, $post)
     {
 
-        // Get WMS address and layers.
-        $address = $post['address'];
-        $layers = $post['layers'];
+        // Create/update/delete WMS.
+        $this->wmsTable->createOrUpdate(
+          $item,
+          $post['address'],
+          $post['layers']
+        );
 
-        // Create/update/delete.
-        $this->wmsTable->createOrUpdate($record, $address, $layers);
+    }
+
+    /**
+     * Try to post new file to Geoserver.
+     *
+     * @param File $file The file.
+     *
+     * @return void.
+     */
+    public function afterInsertFile($file)
+    {
+
+        // Is the image a tiff?
+        if ($file->getMimeType() == 'image/tiff') {
+
+
+
+        }
 
     }
 
