@@ -79,7 +79,9 @@ class NLMAPS_Test_AppTestCase extends Omeka_Test_AppTestCase
      * @return Omeka_record $service The service.
      */
     public function __service(
-        $item=null, $address='http://test/wms', $layers='test:layer1')
+        $item=null,
+        $address='http://test/wms',
+        $layers='test:layer1')
     {
 
         // If no item, create one.
@@ -106,7 +108,11 @@ class NLMAPS_Test_AppTestCase extends Omeka_Test_AppTestCase
      *
      * @return Omeka_record $text The new text.
      */
-    public function __text($item, $elementSet, $elementName, $value)
+    public function __text(
+        $item,
+        $elementSet,
+        $elementName,
+        $value)
     {
 
         // Get tables.
@@ -127,6 +133,33 @@ class NLMAPS_Test_AppTestCase extends Omeka_Test_AppTestCase
         $text->save();
 
         return $text;
+
+    }
+
+    /**
+     * Create a server.
+     *
+     * @return Omeka_record $server The server.
+     */
+    public function __server(
+        $name='Test Server',
+        $url='http://test/wms',
+        $namespace='workspace',
+        $username='admin',
+        $password='geoserver',
+        $active=1)
+    {
+
+        $server = new NeatlineMapsServer;
+        $server->name = $name;
+        $server->url = $url;
+        $server->namespace = $namespace;
+        $server->username = $username;
+        $server->password = $password;
+        $server->active = $active;
+        $server->save();
+
+        return $server;
 
     }
 

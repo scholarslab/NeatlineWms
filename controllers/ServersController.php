@@ -54,8 +54,13 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
 
             // If form is valid.
             if ($form->isValid($post)) {
+
+                // Create server.
                 $this->serversTable->createServer($post);
+
+                // Redirect to browse.
                 $this->redirect->goto('browse');
+
             }
 
             // If form is invalid.

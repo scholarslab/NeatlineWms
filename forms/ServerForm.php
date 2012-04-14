@@ -137,7 +137,7 @@ class ServerForm extends Omeka_Form
         $this->addElement('checkbox', 'active', array(
             'label'         => 'Active',
             'description'   => 'Should this server be used to handle new GeoTiff uploads?',
-            'size'          => 40
+            'checked'       => true
         ));
 
         // Submit.

@@ -45,4 +45,51 @@ class NeatlineMapsServer extends Omeka_record
      */
     public $active;
 
+
+    /**
+     * Manage unique `active` field on save.
+     *
+     * @return void.
+     */
+    public function save()
+    {
+
+        // Get the current active server.
+        $serversTable = $this->getTable('NeatlineMapsServer');
+        $active = $serversTable->getActiveServer();
+
+        // Is active set to true?
+        if ($this->active == 1) {
+
+            // Is the current active non-self?
+            if ($active && $active->id !== $this->id) {
+
+                // Switch active server.
+                $active->active = 0;
+                $active->parentSave();
+
+            }
+
+        }
+
+        // If there is no current active server, set self active.
+        else if (!$active) {
+            $this->active = 1;
+        }
+
+        // Call parent.
+        parent::save();
+
+    }
+
+    /**
+     * Raw save.
+     *
+     * @return void.
+     */
+    public function parentSave()
+    {
+        parent::save();
+    }
+
 }
