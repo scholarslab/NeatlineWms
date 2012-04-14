@@ -16,6 +16,16 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
 {
 
     /**
+     * Initialize.
+     *
+     * @return void
+     */
+    public function init()
+    {
+        $this->serversTable = $this->getTable('NeatlineMapsServer');
+    }
+
+    /**
      * Show servers.
      *
      * @return void
@@ -35,6 +45,27 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
 
         // Create form.
         $form = new ServerForm;
+
+        // If a form as been posted.
+        if ($this->_request->isPost()) {
+
+            // Get post.
+            $post = $this->_request->getPost();
+
+            // If form is valid.
+            if ($form->isValid($post)) {
+                $this->serversTable->createServer($post);
+                $this->redirect->goto('browse');
+            }
+
+            // If form is invalid.
+            else {
+                $form->populate($post);
+            }
+
+        }
+
+        // Push form to view.
         $this->view->form = $form;
 
     }
