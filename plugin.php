@@ -35,6 +35,8 @@ if (!defined('NLMAPS_PLUGIN_DIR')) {
 // requires {{{
 require_once NLMAPS_PLUGIN_DIR . '/NeatlineMapsPlugin.php';
 require_once NLMAPS_PLUGIN_DIR . '/helpers/NeatlineMapsFunctions.php';
+require_once NLMAPS_PLUGIN_DIR . '/forms/ServerForm.php';
+require_once NLMAPS_PLUGIN_DIR . '/forms/Validate/isUrl.php';
 require_once NLMAPS_PLUGIN_DIR . '/lib/GeoserverMap_Abstract.php';
 require_once NLMAPS_PLUGIN_DIR . '/lib/GeoserverMap_WMS.php';
 // }}}

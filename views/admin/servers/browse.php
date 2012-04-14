@@ -17,7 +17,7 @@
 head(array('content_class' => 'neatline'));
 ?>
 
-<?php echo $this->partial('index/_header.php', array(
+<?php echo $this->partial('servers/_header.php', array(
     'subtitle' => 'Browse Servers',
     'add_button_uri' => 'neatline-maps/add',
     'add_button_text' => 'Create a Server'

@@ -33,6 +33,10 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
     public function addAction()
     {
 
+        // Create form.
+        $form = new ServerForm;
+        $this->view->form = $form;
+
     }
 
     /**

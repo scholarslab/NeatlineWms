@@ -82,6 +82,23 @@ class ServerForm extends Omeka_Form
             )
         ));
 
+        // Namespace.
+        $this->addElement('text', 'workspace', array(
+            'label'         => 'Workspace',
+            'description'   => 'Enter the Geoserver workspace.',
+            'size'          => 40,
+            'required'      => true,
+            'validators'    => array(
+                array('validator' => 'NotEmpty', 'breakChainOnFailure' => true, 'options' =>
+                    array(
+                        'messages' => array(
+                            Zend_Validate_NotEmpty::IS_EMPTY => 'Enter a workspace.'
+                        )
+                    )
+                )
+            )
+        ));
+
         // Username.
         $this->addElement('text', 'username', array(
             'label'         => 'Username',
@@ -116,13 +133,22 @@ class ServerForm extends Omeka_Form
             )
         ));
 
+        // Active.
+        $this->addElement('checkbox', 'active', array(
+            'label'         => 'Active',
+            'description'   => 'Should this server be used to handle new GeoTiff uploads?',
+            'size'          => 40
+        ));
+
         // Submit.
         $this->addElement('submit', 'submit', array(
             'label' => 'Save'
         ));
 
         // Group the data fields.
-        $this->addDisplayGroup(array('name', 'url', 'username', 'password'), 'server_information');
+        $this->addDisplayGroup(array(
+            'name', 'url', 'workspace', 'username', 'password', 'active'
+        ), 'server_information');
 
         // Group the submit button sparately.
         $this->addDisplayGroup(array('submit'), 'submit_button');
