@@ -102,6 +102,20 @@ function nlwms_renderMap($item)
 }
 
 /**
+ * Construct the Geoserver layer name given a server and file.
+ *
+ * @param Omeka_record $server The server.
+ * @param Omeka_record $file The file.
+ *
+ * @return string $layer The name of the Geoserver layer.
+ */
+function nlwms_layerName($server, $file)
+{
+    $layer = explode('.', $file->original_filename);
+    return $server->namespace . ':' . $layer[0];
+}
+
+/**
  * Post a file to GeoServer and see if it accepts it as a valid geotiff.
  *
  * @param Omeka_record $file The file to send.

@@ -216,6 +216,14 @@ class NeatlineMapsPlugin
                     $this->wmsTable->createFromFileAndServer($file, $server);
                 }
 
+                // If a WMS already exists and the address is the
+                // same as the address of the active server, append
+                // the new layer to the active layers list.
+                else if ($wms->address == $server->getWmsAddress()) {
+                    $wms->layers .= ',' . nlwms_layerName($server, $file);
+                    $wms->save();
+                }
+
             }
 
         }
@@ -270,6 +278,7 @@ class NeatlineMapsPlugin
         // Listen for items show.
         if ($request->getModuleName() == 'default' &&
             $request->getActionName() == 'show') {
+                queue_css('openlayers/style');
                 queue_js('Openlayers/openlayers');
         }
 
@@ -288,6 +297,7 @@ class NeatlineMapsPlugin
         // Listen for items show.
         if ($request->getModuleName() == 'default' &&
             $request->getActionName() == 'show') {
+                queue_css('openlayers/style');
                 queue_js('Openlayers/openlayers');
         }
 

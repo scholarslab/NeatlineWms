@@ -61,7 +61,7 @@ class GeoserverMap_WMS extends Map_Abstract
      */
     public function _getLayers()
     {
-        return $this->map->layers;
+        return str_replace(' ', '', $this->map->layers);
     }
 
     /**

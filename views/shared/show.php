@@ -39,10 +39,9 @@ jQuery(document).ready(function() {
     var bounds = new OpenLayers.Bounds(<?php echo $boundingBox; ?>);
     var options = {
         controls: [
-          // new OpenLayers.Control.Permalink('permalink'),
-          // new OpenLayers.Control.MousePosition(),
-          // new OpenLayers.Control.LayerSwitcher({'ascending': false}),
-          // new OpenLayers.Control.ScaleLine(),
+          new OpenLayers.Control.MousePosition(),
+          new OpenLayers.Control.LayerSwitcher({'ascending': false}),
+          new OpenLayers.Control.ScaleLine(),
           new OpenLayers.Control.PanZoomBar(),
           new OpenLayers.Control.Navigation()
         ],
