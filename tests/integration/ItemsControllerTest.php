@@ -22,7 +22,6 @@ class NLMAPS_IndexControllerTest extends NLMAPS_Test_AppTestCase
      */
     public function setUp()
     {
-        parent::setUp();
         $this->setUpPlugin();
     }
 
