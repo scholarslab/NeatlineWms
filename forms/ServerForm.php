@@ -122,6 +122,7 @@ class ServerForm extends Omeka_Form
             'description'   => 'Enter the Geoserver password.',
             'size'          => 40,
             'required'      => true,
+            'renderPassword'=> true,
             'validators'    => array(
                 array('validator' => 'NotEmpty', 'breakChainOnFailure' => true, 'options' =>
                     array(
