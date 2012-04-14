@@ -103,6 +103,18 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
     public function activeAction()
     {
 
+        // Get server.
+        $server = $this->serversTable->find(
+            $this->_request->getParam('id')
+        );
+
+        // Set active and save.
+        $server->active = 1;
+        $server->save();
+
+        // Redirect to browse.
+        $this->redirect->goto('browse');
+
     }
 
 }

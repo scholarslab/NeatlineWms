@@ -134,15 +134,30 @@ class NeatlineMapsPlugin
     public function defineRoutes($router)
     {
 
-        // Servers action routes.
+        // Default servers routes.
         $router->addRoute(
-            'neatlineMaps',
+            'neatlineMapsServersDefault',
             new Zend_Controller_Router_Route(
                 'neatline-maps/:action',
                 array(
                     'module'        => 'neatline-maps',
                     'controller'    => 'servers',
                     'action'        => 'browse'
+                )
+            )
+        );
+
+        // Server-specific routes.
+        $router->addRoute(
+            'neatlineMapsServersId',
+            new Zend_Controller_Router_Route(
+                'neatline-maps/:action/:id',
+                array(
+                    'module'        => 'neatline-maps',
+                    'controller'    => 'servers'
+                ),
+                array(
+                    'id'            => '\d+'
                 )
             )
         );

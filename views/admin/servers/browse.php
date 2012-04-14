@@ -40,7 +40,8 @@ head(array('content_class' => 'neatline'));
             'URL' => null,
             'Workspace' => null,
             'Status' => null,
-            'Active' => null
+            'Active' => null,
+            'Actions' => null
         )); ?>
         </tr>
     </thead>
@@ -51,9 +52,6 @@ head(array('content_class' => 'neatline'));
         <tr serverid="<?php echo $server->id; ?>">
             <td class="title">
                 <div><?php echo $server->name; ?></div>
-                <?php echo $this->partial('index/_action_buttons.php', array(
-                  'uriSlug' => 'neatline-maps',
-                  'server' => $server)); ?>
             </td>
             <td><a href="<?php echo $server->url; ?>" target="_blank"><?php echo $server->url; ?></a></td>
             <td><?php echo $server->namespace; ?></td>
@@ -61,10 +59,21 @@ head(array('content_class' => 'neatline'));
                 <?php if ($server->isOnline()): ?>
                     <span class="online">Online</span>
                 <?php else: ?>
-                    <span class="offline">Offline or inaccessible</span>
+                    <span class="offline">Offline</span>
                 <?php endif; ?>
             </td>
-            <td></td>
+            <td>
+                <?php if ($server->active): ?>
+                    <img src="<?php echo img('silk-icons/tick.png'); ?>" />
+                <?php else: ?>
+                    <a href="<?php echo uri('neatline-maps/active/' . $server->id); ?>" class="">Set Active</a>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo $this->partial('servers/_action_buttons.php', array(
+                  'uriSlug' => 'neatline-maps',
+                  'server' => $server)); ?>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>

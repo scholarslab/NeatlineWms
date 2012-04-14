@@ -182,6 +182,30 @@ class NLMAPS_ServersControllerTest extends NLMAPS_Test_AppTestCase
     public function testAddServerActiveUpdating()
     {
 
+        // Create active server.
+        $active = $this->__server();
+
+        // Form post.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'name' => 'Test Title',
+                'url' => 'http://localhost:8080/geoserver',
+                'workspace' => 'workspace',
+                'username' => 'admin',
+                'password' => 'geoserver',
+                'active' => 1
+            )
+        );
+
+        // Add.
+        $this->dispatch('neatline-maps/servers/add');
+
+        // Get servers, check active statuses.
+        $server1 = $this->serversTable->find(1);
+        $server2 = $this->serversTable->find(2);
+        $this->assertEquals($server1->active, 0);
+        $this->assertEquals($server2->active, 1);
+
     }
 
 }
