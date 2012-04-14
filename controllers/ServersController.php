@@ -139,6 +139,20 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
     public function deleteAction()
     {
 
+        // Get server.
+        $server = $this->serversTable->find(
+            $this->_request->getParam('id')
+        );
+
+        // If a form as been posted.
+        if ($this->_request->isPost()) {
+            $server->delete();
+            $this->redirect->goto('browse');
+        }
+
+        // Push server to view.
+        $this->view->server = $server;
+
     }
 
     /**
