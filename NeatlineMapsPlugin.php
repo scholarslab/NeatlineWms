@@ -13,7 +13,7 @@
  */
 
 
-class NeatlineWmsPlugin
+class NeatlineMapsPlugin
 {
 
     // Hooks.
@@ -115,14 +115,14 @@ class NeatlineWmsPlugin
     public function defineRoutes($router)
     {
 
-        // Public edition view.
+        // Servers action routes.
         $router->addRoute(
-            'neatlineWms',
+            'neatlineMaps',
             new Zend_Controller_Router_Route(
-                'neatline-wms/:action',
+                'neatline-maps/servers/:action',
                 array(
-                    'module'        => 'neatline-wms',
-                    'controller'    => 'index',
+                    'module'        => 'neatline-maps',
+                    'controller'    => 'servers',
                     'action'        => 'browse'
                 )
             )

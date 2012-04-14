@@ -12,9 +12,9 @@
  * @license     http://www.apache.org/licenses/LICENSE-2.0.html Apache 2 License
  */
 
-require_once '../NeatlineWmsPlugin.php';
+require_once '../NeatlineMapsPlugin.php';
 
-class NLWMS_Test_AppTestCase extends Omeka_Test_AppTestCase
+class NLMAPS_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
 
     private $_dbHelper;
@@ -35,9 +35,9 @@ class NLWMS_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         // Set up Neatline WMS.
         $plugin_broker = get_plugin_broker();
-        $this->_addHooksAndFilters($plugin_broker, 'NeatlineWms');
+        $this->_addHooksAndFilters($plugin_broker, 'NeatlineMaps');
         $plugin_helper = new Omeka_Test_Helper_Plugin;
-        $plugin_helper->setUp('NeatlineWms');
+        $plugin_helper->setUp('NeatlineMaps');
 
         $this->_dbHelper = Omeka_Test_Helper_Db::factory($this->core);
 
@@ -51,7 +51,7 @@ class NLWMS_Test_AppTestCase extends Omeka_Test_AppTestCase
     public function _addHooksAndFilters($plugin_broker, $plugin_name)
     {
         $plugin_broker->setCurrentPluginDirName($plugin_name);
-        new NeatlineWmsPlugin;
+        new NeatlineMapsPlugin;
     }
 
 

@@ -15,16 +15,16 @@
 
 // defines {{{
 
-if (!defined('NLWMS_PLUGIN_VERSION')) {
+if (!defined('NLMAPS_PLUGIN_VERSION')) {
     define(
-        'NLWMS_PLUGIN_VERSION',
-        get_plugin_ini('NeatlineWMS', 'version')
+        'NLMAPS_PLUGIN_VERSION',
+        get_plugin_ini('NeatlineMaps', 'version')
     );
 }
 
-if (!defined('NLWMS_PLUGIN_DIR')) {
+if (!defined('NLMAPS_PLUGIN_DIR')) {
     define(
-        'NLWMS_PLUGIN_DIR',
+        'NLMAPS_PLUGIN_DIR',
         dirname(__FILE__)
     );
 }
@@ -33,14 +33,14 @@ if (!defined('NLWMS_PLUGIN_DIR')) {
 
 
 // requires {{{
-require_once NLWMS_PLUGIN_DIR . '/NeatlineWmsPlugin.php';
-require_once NLWMS_PLUGIN_DIR . '/helpers/NeatlineWmsFunctions.php';
-require_once NLWMS_PLUGIN_DIR . '/lib/GeoserverMap_Abstract.php';
-require_once NLWMS_PLUGIN_DIR . '/lib/GeoserverMap_WMS.php';
+require_once NLMAPS_PLUGIN_DIR . '/NeatlineMapsPlugin.php';
+require_once NLMAPS_PLUGIN_DIR . '/helpers/NeatlineMapsFunctions.php';
+require_once NLMAPS_PLUGIN_DIR . '/lib/GeoserverMap_Abstract.php';
+require_once NLMAPS_PLUGIN_DIR . '/lib/GeoserverMap_WMS.php';
 // }}}
 
 
 /*
  * Run.
  */
-new NeatlineWmsPlugin;
+new NeatlineMapsPlugin;

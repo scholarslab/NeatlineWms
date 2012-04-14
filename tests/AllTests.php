@@ -12,20 +12,20 @@
  * @license     http://www.apache.org/licenses/LICENSE-2.0.html Apache 2 License
  */
 
-require_once 'NeatlineWMS_Test_AppTestCase.php';
+require_once 'NeatlineMaps_Test_AppTestCase.php';
 
-class NeatlineWMS_AllTests extends PHPUnit_Framework_TestSuite
+class NeatlineMaps_AllTests extends PHPUnit_Framework_TestSuite
 {
 
     /**
      * Aggregate the tests.
      *
-     * @return NeatlineWMS_AllTests $suite The test suite.
+     * @return NeatlineMaps_AllTests $suite The test suite.
      */
     public static function suite()
     {
 
-        $suite = new NeatlineWMS_AllTests('Neatline WMS Tests');
+        $suite = new NeatlineMaps_AllTests('Neatline Maps Tests');
 
         $collector = new PHPUnit_Runner_IncludePathTestCollector(
             array(

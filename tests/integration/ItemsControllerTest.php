@@ -12,7 +12,7 @@
  * @license     http://www.apache.org/licenses/LICENSE-2.0.html Apache 2 License
  */
 
-class NLWMS_IndexControllerTest extends NLWMS_Test_AppTestCase
+class NLMAPS_IndexControllerTest extends NLMAPS_Test_AppTestCase
 {
 
     /**
