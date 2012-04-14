@@ -32,7 +32,7 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
      */
     public function browseAction()
     {
-
+        $this->view->servers = $this->serversTable->findAll();
     }
 
     /**

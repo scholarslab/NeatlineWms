@@ -14,6 +14,7 @@
 ?>
 
 <?php
+queue_css('neatline-maps-admin');
 head(array('content_class' => 'neatline'));
 ?>
 
@@ -37,8 +38,9 @@ head(array('content_class' => 'neatline'));
         <?php browse_headings(array(
             'Server' => null,
             'URL' => null,
-            'Namespace' => null,
-            'Status' => null
+            'Workspace' => null,
+            'Status' => null,
+            'Active' => null
         )); ?>
         </tr>
     </thead>
@@ -47,13 +49,21 @@ head(array('content_class' => 'neatline'));
         <!-- Servers listings. -->
         <?php foreach ($servers as $server): ?>
         <tr serverid="<?php echo $server->id; ?>">
-            <td class="title"><?php echo $server->name; ?>
+            <td class="title">
+                <div><?php echo $server->name; ?></div>
                 <?php echo $this->partial('index/_action_buttons.php', array(
                   'uriSlug' => 'neatline-maps',
                   'server' => $server)); ?>
             </td>
-            <td></td>
-            <td></td>
+            <td><a href="<?php echo $server->url; ?>" target="_blank"><?php echo $server->url; ?></a></td>
+            <td><?php echo $server->namespace; ?></td>
+            <td>
+                <?php if ($server->isOnline()): ?>
+                    <span class="online">Online</span>
+                <?php else: ?>
+                    <span class="offline">Offline or inaccessible</span>
+                <?php endif; ?>
+            </td>
             <td></td>
         </tr>
         <?php endforeach; ?>
