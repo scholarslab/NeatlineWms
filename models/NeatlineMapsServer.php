@@ -71,6 +71,16 @@ class NeatlineMapsServer extends Omeka_record
     }
 
     /**
+     * Construct the WMS address for the server.
+     *
+     * @return boolean True if the server is online.
+     */
+    public function getWmsAddress()
+    {
+        return $this->url . '/' . $this->namespace . '/wms';
+    }
+
+    /**
      * Manage unique `active` field on save.
      *
      * @return void.

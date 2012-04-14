@@ -201,8 +201,24 @@ class NeatlineMapsPlugin
             // Get the active server.
             $server = $this->serversTable->getActiveServer();
 
-            // Throw the file at Geoserver.
-            _putFileToGeoserver($file, $server);
+            // Throw file at Geoserver.
+            if (_putFileToGeoserver($file, $server)) {
+
+                // Get parent item and WMS.
+                $item = $file->getItem();
+                $wms = $this->wmsTable->findByItem($item);
+
+                // If no WMS exists, create one for the file that
+                // was just uploaded to Geoserver.
+                if (!$wms) {
+
+                    // $newWms = new NeatlineWms($item);
+                    // $newWms->address = $server->getWmsAddress();
+                    // $newWms->layers = $file->original_filename;
+
+                }
+
+            }
 
         }
 

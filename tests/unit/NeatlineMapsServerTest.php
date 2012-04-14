@@ -59,6 +59,29 @@ class NLMAPS_NeatlineMapsServerTest extends NLMAPS_Test_AppTestCase
     }
 
     /**
+     * getWmsAddress() should return the correctly-formed WMS address.
+     *
+     * @return void.
+     */
+    public function testGetWmsAddress()
+    {
+
+        // Create a record.
+        $server = new NeatlineMapsServer();
+
+        // Set.
+        $server->name = 'Test Server';
+        $server->url = 'http://localhost:8080/geoserver';
+        $server->namespace = 'namespace';
+
+        $this->assertEquals(
+            $server->getWmsAddress(),
+            'http://localhost:8080/geoserver/namespace/wms'
+        );
+
+    }
+
+    /**
      * When there are no servers and the saved server is not set to
      * active, set active.
      *
