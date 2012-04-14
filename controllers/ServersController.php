@@ -84,6 +84,51 @@ class NeatlineMaps_ServersController extends Omeka_Controller_Action
     public function editAction()
     {
 
+        // Get server.
+        $server = $this->serversTable->find(
+            $this->_request->getParam('id')
+        );
+
+        // Get form.
+        $form = new ServerForm;
+
+        // Populate the form.
+        $form->populate(array(
+            'name' => $server->name,
+            'url' => $server->url,
+            'workspace' => $server->namespace,
+            'username' => $server->username,
+            'password' => $server->password,
+            'active' => $server->active
+        ));
+
+        // If a form as been posted.
+        if ($this->_request->isPost()) {
+
+            // Get post.
+            $post = $this->_request->getPost();
+
+            // If form is valid.
+            if ($form->isValid($post)) {
+
+                // Create server.
+                $this->serversTable->updateServer($server, $post);
+
+                // Redirect to browse.
+                $this->redirect->goto('browse');
+
+            }
+
+            // If form is invalid.
+            else {
+                $form->populate($post);
+            }
+
+        }
+
+        // Push form to view.
+        $this->view->form = $form;
+
     }
 
     /**

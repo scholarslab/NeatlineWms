@@ -13,4 +13,18 @@
  */
 ?>
 
+<?php
+head(array('content_class' => 'neatline'));
+?>
 
+<?php echo $this->partial('servers/_header.php', array(
+    'subtitle' => 'Edit Server',
+    'add_button_uri' => 'neatline-maps/add',
+    'add_button_text' => 'Create a Server'
+)); ?>
+
+<div id="primary">
+    <?php echo $form; ?>
+</div>
+
+<?php foot(); ?>
