@@ -25,7 +25,9 @@ class NeatlineMapsPlugin
         'after_insert_file',
         'admin_append_to_items_show_primary',
         'public_append_to_items_show',
-        'before_delete_item'
+        'before_delete_item',
+        'public_theme_header',
+        'admin_theme_header'
     );
 
     private static $_filters = array(
@@ -243,20 +245,6 @@ class NeatlineMapsPlugin
     }
 
     /**
-     * When a an item is saved, check to see if it is a georectified
-     * tiff. If so, try to put it to Geoserver.
-     *
-     * @param Omeka_record $record The item.
-     * @param array $post The $_POST.
-     *
-     * @return void.
-     */
-    public function afterSaveFormRecord($record, $post)
-    {
-
-    }
-
-    /**
      * On item delete, delete associated WMS.
      *
      * @param Omeka_record $item The item.
@@ -267,6 +255,42 @@ class NeatlineMapsPlugin
     {
         $wms = $this->wmsTable->findByItem($item);
         if ($wms) { $wms->delete(); }
+    }
+
+    /**
+     * Include Openlayers in public views.
+     *
+     * @param array $request The request.
+     *
+     * @return void.
+     */
+    public function publicThemeHeader($request)
+    {
+
+        // Listen for items show.
+        if ($request->getModuleName() == 'default' &&
+            $request->getActionName() == 'show') {
+                queue_js('Openlayers/openlayers');
+        }
+
+    }
+
+    /**
+     * Include Openlayers in admin views.
+     *
+     * @param array $request The request.
+     *
+     * @return void.
+     */
+    public function adminThemeHeader($request)
+    {
+
+        // Listen for items show.
+        if ($request->getModuleName() == 'default' &&
+            $request->getActionName() == 'show') {
+                queue_js('Openlayers/openlayers');
+        }
+
     }
 
 
