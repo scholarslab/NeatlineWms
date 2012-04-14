@@ -265,4 +265,170 @@ class NLMAPS_ServersControllerTest extends NLMAPS_Test_AppTestCase
 
     }
 
+    /**
+     * Test for form errors for empty fields.
+     *
+     * @return void.
+     */
+    public function testEditServerEmptyFieldErrors()
+    {
+
+        // Create server.
+        $server = $this->__server();
+
+        // Form post.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'name' => '',
+                'url' => '',
+                'workspace' => '',
+                'username' => '',
+                'password' => ''
+            )
+        );
+
+        $this->dispatch('neatline-maps/edit/' . $server->id);
+        $this->assertQueryCount('ul.errors', 5);
+        $this->assertQueryContentContains('ul.errors li', 'Enter a name.');
+        $this->assertQueryContentContains('ul.errors li', 'Enter a URL.');
+        $this->assertQueryContentContains('ul.errors li', 'Enter a workspace.');
+        $this->assertQueryContentContains('ul.errors li', 'Enter a username.');
+        $this->assertQueryContentContains('ul.errors li', 'Enter a password.');
+
+    }
+
+    /**
+     * Test for form error for invalid URL.
+     *
+     * @return void.
+     */
+    public function testEditServerInvalidUrlError()
+    {
+
+        // Create server.
+        $server = $this->__server();
+
+        // Form post.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'name' => 'Test Server',
+                'url' => 'invalid',
+                'workspace' => 'workspace',
+                'username' => 'admin',
+                'password' => 'geoserver'
+            )
+        );
+
+        $this->dispatch('neatline-maps/edit/' . $server->id);
+        $this->assertQueryCount('ul.errors', 1);
+        $this->assertQueryContentContains('ul.errors li', 'Enter a valid URL.');
+
+    }
+
+    /**
+     * Test for no form error for localhost URL.
+     *
+     * @return void.
+     */
+    public function testEditServerLocalUrl()
+    {
+
+        // Create server.
+        $server = $this->__server();
+
+        // Form post.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'name' => '',
+                'url' => 'http://localhost:8080/geoserver',
+                'workspace' => '',
+                'username' => '',
+                'password' => ''
+            )
+        );
+
+        $this->dispatch('neatline-maps/edit/' . $server->id);
+        $this->assertNotQueryContentContains('ul.errors li', 'Enter a valid URL.');
+
+    }
+
+    /**
+     * Valid form should edit server.
+     *
+     * @return void.
+     */
+    public function testEditServerSuccess()
+    {
+
+        // Create server.
+        $server = $this->__server(
+            'Test Title',
+            'http://localhost:8080/geoserver',
+            'workspace',
+            'admin',
+            'geoserver',
+            1
+        );
+
+        // Form post.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'name' => 'New Title',
+                'url' => 'http://localhost:8888/geoserver',
+                'workspace' => 'newworkspace',
+                'username' => 'username',
+                'password' => 'password',
+                'active' => 1
+            )
+        );
+
+        // Edit.
+        $this->dispatch('neatline-maps/edit/' . $server->id);
+
+        // Get new server, check params.
+        $server = $this->serversTable->find(1);
+        $this->assertEquals($server->name, 'New Title');
+        $this->assertEquals($server->url, 'http://localhost:8888/geoserver');
+        $this->assertEquals($server->namespace, 'newworkspace');
+        $this->assertEquals($server->username, 'username');
+        $this->assertEquals($server->password, 'password');
+        $this->assertEquals($server->active, 1);
+
+    }
+
+    /**
+     * Valid form should edit server.
+     *
+     * @return void.
+     */
+    public function testEditServerActiveUpdating()
+    {
+
+        // Create servers.
+        $server1 = $this->__server();
+        $server2 = $this->__server();
+
+        // Form post.
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'name' => 'New Title',
+                'url' => 'http://localhost:8888/geoserver',
+                'workspace' => 'newworkspace',
+                'username' => 'username',
+                'password' => 'password',
+                'active' => 1
+            )
+        );
+
+        // Edit.
+        $this->dispatch('neatline-maps/edit/' . $server1->id);
+
+        // Get servers, check statuses.
+        $server1 = $this->serversTable->find(1);
+        $server2 = $this->serversTable->find(2);
+        $this->assertEquals($server1->active, 1);
+        $this->assertEquals($server2->active, 0);
+
+    }
+
 }
