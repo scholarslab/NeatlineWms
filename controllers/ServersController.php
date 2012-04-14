@@ -12,7 +12,7 @@
  * @license     http://www.apache.org/licenses/LICENSE-2.0.html Apache 2 License
  */
 
-class NeatlineWms_ServersController extends Omeka_Controller_Action
+class NeatlineMaps_ServersController extends Omeka_Controller_Action
 {
 
     /**

@@ -29,6 +29,7 @@ class NeatlineMapsPlugin
     );
 
     private static $_filters = array(
+        'admin_navigation_main',
         'admin_items_form_tabs'
     );
 
@@ -204,6 +205,21 @@ class NeatlineMapsPlugin
      * Filter callbacks:
      */
 
+
+    /**
+     * Add link to main admin menu bar.
+     *
+     * @param array $tabs This is an array of label => URI pairs.
+     *
+     * @return array The tabs array with the Neatline Maps tab.
+     */
+    public function adminNavigationMain($tabs)
+    {
+
+        $tabs['Neatline Maps'] = uri('neatline-maps');
+        return $tabs;
+
+    }
 
     /**
      * Add tab to items add/edit.
