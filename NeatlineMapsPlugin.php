@@ -42,6 +42,7 @@ class NeatlineMapsPlugin
     {
         $this->_db = get_db();
         $this->wmsTable = $this->_db->getTable('NeatlineWms');
+        $this->serversTable = $this->_db->getTable('NeatlineMapsServer');
         self::addHooksAndFilters();
     }
 
@@ -197,7 +198,11 @@ class NeatlineMapsPlugin
         // Is the image a tiff?
         if ($file->getMimeType() == 'image/tiff') {
 
+            // Get the active server.
+            $server = $this->serversTable->getActiveServer();
 
+            // Throw the file at Geoserver.
+            _putFileToGeoserver($file, $server);
 
         }
 
