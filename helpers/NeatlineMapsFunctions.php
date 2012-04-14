@@ -133,8 +133,12 @@ function _putFileToGeoserver($file, $server)
     $zip->addFile(ARCHIVE_DIR . '/files/' . $file->archive_filename, $file->original_filename);
     $zip->close();
 
+    // Get store name.
+    $store = explode('.', $file->original_filename);
+
+    // Construct coverage address.
     $coverageAddress = $server->url . '/rest/workspaces/' .
-        $server->namespace . '/coveragestores/' . $file->original_filename .
+        $server->namespace . '/coveragestores/' . $store[0] .
         '/file.geotiff';
 
     $ch = curl_init($coverageAddress);
@@ -151,6 +155,6 @@ function _putFileToGeoserver($file, $server)
     $buffer = curl_exec($ch);
     $info = curl_getinfo($ch);
 
-    return ($info['http_code'] == 201);
+    return $info['http_code'] == 201;
 
 }
