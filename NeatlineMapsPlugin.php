@@ -178,7 +178,7 @@ class NeatlineMapsPlugin
     public function afterSaveFormItem($item, $post)
     {
 
-        if (empty($_FILES['file'])) {
+        // if (empty($_FILES['file'])) {
 
             // Create/update/delete WMS.
             $this->wmsTable->createOrUpdate(
@@ -187,7 +187,7 @@ class NeatlineMapsPlugin
                 $post['layers']
             );
 
-        }
+        // }
 
     }
 
@@ -204,15 +204,11 @@ class NeatlineMapsPlugin
         // Is the image a tiff?
         if ($file->getMimeType() == 'image/tiff') {
 
-            echo '*** tiff detected';
-
             // Get the active server.
             $server = $this->serversTable->getActiveServer();
 
             // Throw file at Geoserver.
             if (_putFileToGeoserver($file, $server)) {
-
-                echo '*** file put to geoserver';
 
                 // Get parent item and WMS.
                 $item = $file->getItem();
@@ -222,7 +218,6 @@ class NeatlineMapsPlugin
                 // was just uploaded to Geoserver.
                 if (!$wms) {
                     $this->wmsTable->createFromFileAndServer($file, $server);
-                    echo '*** creating new wms';
                 }
 
                 // If a WMS already exists and the address is the
@@ -231,7 +226,6 @@ class NeatlineMapsPlugin
                 else if ($wms->address == $server->getWmsAddress()) {
                     $wms->layers .= ',' . nlwms_layerName($server, $file);
                     $wms->save();
-                    echo '*** updating wms';
                 }
 
             }
