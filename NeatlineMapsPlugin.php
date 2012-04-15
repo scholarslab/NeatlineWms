@@ -178,7 +178,8 @@ class NeatlineMapsPlugin
     public function afterSaveFormItem($item, $post)
     {
 
-        // if (empty($_FILES['file'])) {
+        if (count($_FILES['file']['size']) == 1 &&
+            empty($_FILES['file']['size'][0])) {
 
             // Create/update/delete WMS.
             $this->wmsTable->createOrUpdate(
@@ -187,7 +188,7 @@ class NeatlineMapsPlugin
                 $post['layers']
             );
 
-        // }
+        }
 
     }
 
