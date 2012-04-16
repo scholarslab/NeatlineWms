@@ -21,5 +21,21 @@ Neatline exhibit, the WMS map will automatically render in the exhibit.
 
 Once the installation is finished, you'll see a new tab along the top of the administrative interface labeled "Neatline Maps."
 
+## Adding Web Map Services to Items 
+
+To connect an item with a web map service, you can either (a) link the item _directly_ to an existing service by entering a WMS address and list of layers or (b) connect the plugin with a Geoserver instance that you have administrative access to and create new layers by uploading geoencoded .tiff files through the Omeka administrative interface.
+
+### Use an Existing Web Map Service
+
+To link an item to an existing service:
+
+  1. Go to the "Browse Items" view in the Omeka administrative interface.
+  2. Open the Item add/edit form by either (a) clicking the "Add an Item" button at the top right or clicking the "Edit" button under the listing of the item that you want to link the WMS to.
+  3. In the Item edit form, click on the "Web Map Service" in the vertical stack of tabs on the left.
+  4. Enter the WMS address of the server and a comma-delimited list of layers in the two fields.
+  5. Click the "Save Changes" button (or "Add Item," if you're creating a new Item).
+
+If the WMS address and layers point to a valid web map service, the map will be displayed along with the regular metadata on all item-specific views throughout the site.
+
 [geoserver]: http://geoserver.org
-[neatline-maps-download]: http://neatline.org/download
+[neatline-maps-download]: http://neatline.scholarslab.org/plugins/neatline-maps
