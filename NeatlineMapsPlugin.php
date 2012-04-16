@@ -178,7 +178,8 @@ class NeatlineMapsPlugin
     public function afterSaveFormItem($item, $post)
     {
 
-        if (count($_FILES['file']['size']) == 1 &&
+        if (!isset($_FILES['file']) ||
+            count($_FILES['file']['size']) == 1 &&
             empty($_FILES['file']['size'][0])) {
 
             // Create/update/delete WMS.
@@ -209,7 +210,7 @@ class NeatlineMapsPlugin
             $server = $this->serversTable->getActiveServer();
 
             // Throw file at Geoserver.
-            if (_putFileToGeoserver($file, $server)) {
+            if ($server && _putFileToGeoserver($file, $server)) {
 
                 // Get parent item and WMS.
                 $item = $file->getItem();
