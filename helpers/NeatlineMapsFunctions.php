@@ -82,20 +82,24 @@ function nlwms_renderMap($item)
     // If a service exists, render it.
     if ($service) {
 
-        // Create the renderer.
-        $map = new GeoserverMap_WMS($service);
+        try {
 
-        if ($map->_isValid()) {
+            // Create the renderer.
+            $map = new GeoserverMap_WMS($service);
 
-          return __v()->partial('show.php', array(
-              'mapTitle' => $map->mapTitle,
-              'wmsAddress' => $map->wmsAddress,
-              'layers' => $map->layers,
-              'boundingBox' => $map->boundingBox,
-              'epsg' => $map->epsg
-          ));
+            if ($map->_isValid()) {
 
-        }
+              return __v()->partial('show.php', array(
+                  'mapTitle' => $map->mapTitle,
+                  'wmsAddress' => $map->wmsAddress,
+                  'layers' => $map->layers,
+                  'boundingBox' => $map->boundingBox,
+                  'epsg' => $map->epsg
+              ));
+
+            }
+
+        } catch (Exception $e) {};
 
     }
 
