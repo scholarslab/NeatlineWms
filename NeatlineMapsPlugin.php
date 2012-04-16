@@ -191,6 +191,9 @@ class NeatlineMapsPlugin
 
         }
 
+        $flash = new Omeka_Controller_Flash;
+        $flash->setFlash(1, 'tester');
+
     }
 
     /**
